@@ -149,20 +149,35 @@ from crime
 group by OFFENSE_DESCRIPTION
 order by OFFENSE_DESCRIPTION;
 
--- SIMILAR: (TODO: MERGE the redundency)
--- 1     ANNOYING AND ACCOSTIN
--- 112   ANNOYING AND ACCOSTING
--- 352   AUTO THEFT - LEASED/RENTED VEHICLE
--- 1     AUTO THEFT LEASE/RENT VEHICLE
--- 1     DRUGS - POSS CLASS D - INTENT MFR DIST DISP
--- 742   DRUGS - POSS CLASS D - INTENT TO MFR DIST DISP
--- 138   DRUGS - POSS CLASS E - INTENT TO MFR DIST DISP
--- 2     DRUGS - POSS CLASS E INTENT TO MF DIST DISP
--- 1     FRAUD - FALSE PRETENSE
--- 3660  FRAUD - FALSE PRETENSE / SCHEME
--- 1     PROSTITUTE - COMMON NIGHTWALKER
--- 11    PROSTITUTION - COMMON NIGHTWALKER
+-- SIMILAR OFFENSE_DESCRIPTION
+-- 2407    Disorderly Conduct  ANNOYING AND ACCOSTIN                            1
+-- 02407   Disorderly Conduct  ANNOYING AND ACCOSTING                           112
+-- 0727    Auto Theft          AUTO THEFT LEASE/RENT VEHICLE                    1
+-- 00727   Auto Theft          AUTO THEFT - LEASED/RENTED VEHICLE               352
+-- 1864    Drug Violation      DRUGS - POSS CLASS D - INTENT MFR DIST DISP      1
+-- 01848   Drug Violation      DRUGS - POSS CLASS D - INTENT TO MFR DIST DISP   742
+-- 1866    Drug Violation      DRUGS - POSS CLASS E INTENT TO MF DIST DISP      2
+-- 01850   Drug Violation      DRUGS - POSS CLASS E - INTENT TO MFR DIST DISP   138
+-- 1102    Fraud               FRAUD - FALSE PRETENSE                           1
+-- 01102   Fraud               FRAUD - FALSE PRETENSE / SCHEME                  3660
+-- 1605    Prostitution        PROSTITUTE - COMMON NIGHTWALKER                  1
+-- 01605   Prostitution        PROSTITUTION - COMMON NIGHTWALKER                11
 
+-- SAME OFFENSE_DESCRIPTION
+-- 1848    Drug Violation       DRUGS - POSS CLASS B - INTENT TO MFR DIST DISP  8
+-- 01843   Drug Violation       DRUGS - POSS CLASS B - INTENT TO MFR DIST DISP  1779
+-- 2910    Violations           VAL - OPERATING AFTER REV/SUSP.                 2
+-- 02907   Violations           VAL - OPERATING AFTER REV/SUSP.                 2306
+
+-- TODO: merge OFFENSE
+-- 2407 to 02407
+-- 0727 to 00727
+-- 1864 to 01848
+-- 1866 to 01850
+-- 1102 to 01102
+-- 1605 to 01605
+-- 1848 to 01843
+-- 2910 to 02907
 
 -- 6. DISTRICT
 select count(distinct DISTRICT) from crime;  -- 13
