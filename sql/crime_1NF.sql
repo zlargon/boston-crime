@@ -10,8 +10,16 @@ select count(distinct STREET) from crime;   -- 4520
 update crime set STREET = trim(STREET);
 select count(distinct STREET) from crime;   -- 4515
 
+-- 3. DISTRICT
+update crime set DISTRICT = NULL where DISTRICT = "";
 
--- 3. Merge Similar OFFENSE_CODE and DESCRIPTION (total 26)
+-- 4. REPORTING_AREA
+update crime set REPORTING_AREA = NULL where REPORTING_AREA = "";
+
+-- 5. UCR_PART
+update crime set UCR_PART = NULL where UCR_PART = "";
+
+-- 6. Merge Similar OFFENSE_CODE and DESCRIPTION (total 26)
 --    Before 262
 select count(*) from (
     select OFFENSE_CODE, OFFENSE_CODE_GROUP, OFFENSE_DESCRIPTION from crime
@@ -232,7 +240,7 @@ select count(*) from (
     group by OFFENSE_CODE, OFFENSE_CODE_GROUP, OFFENSE_DESCRIPTION
 ) as t;
 
--- 4. remove duplicated
+-- 7. remove duplicated
 select count(*) from crime;     -- before 277086
 
 drop table if exists crime_tmp;
@@ -264,13 +272,13 @@ where RN = 1;
 drop table crime_tmp;
 select count(*) from crime;     -- after 277060
 
--- 5. add the primary keys (INCIDENT_NUMBER, OFFENSE_CODE)
+-- 8. add the primary keys (INCIDENT_NUMBER, OFFENSE_CODE)
 ALTER TABLE crime
 CHANGE COLUMN `INCIDENT_NUMBER` `INCIDENT_NUMBER` VARCHAR(13) NOT NULL,
 CHANGE COLUMN `OFFENSE_CODE` `OFFENSE_CODE` VARCHAR(5)  NOT NULL,
 ADD PRIMARY KEY (`INCIDENT_NUMBER`, `OFFENSE_CODE`);
 
--- 6. Shooting
+-- 9. Shooting
 ALTER TABLE crime ADD COLUMN shooting_num int after SHOOTING;
 update crime set shooting_num = 0;
 update crime set shooting_num = 1 where SHOOTING = 'Y';
