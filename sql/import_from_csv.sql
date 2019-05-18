@@ -1,6 +1,3 @@
--- need to create database at first
--- mysql -u root -p crime < import_from_csv.sql
-
 -- create table
 drop table if exists crime;
 create table crime (
