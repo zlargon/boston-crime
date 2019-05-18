@@ -2,14 +2,12 @@
 
 -- OFFENSE table
 create table OFFENSE as
-select distinct OFFENSE_CODE, OFFENSE_CODE_GROUP, OFFENSE_DESCRIPTION from crime;
-
--- UCR table
-create table UCR as
-select  @row_index := @row_index + 1 as UCR_ID,
-        t.UCR_PART
-from    (select distinct UCR_PART from crime) as t
-join    (select @row_index := 0) as i;
+select distinct
+    OFFENSE_CODE,
+    OFFENSE_CODE_GROUP,
+    OFFENSE_DESCRIPTION,
+    UCR_PART
+from crime;
 
 -- OCCURRED_TIME
 create table OCCURRED_TIME as
@@ -37,10 +35,8 @@ join    (select @row_index := 0) as i;
 create table INCIDENT as
 select  crime.INCIDENT_NUMBER,
         crime.OFFENSE_CODE,
-        UCR.UCR_ID,
         @row_index := @row_index + 1 as TIME_ID,
         @row_index as REGION_ID,
         crime.SHOOTING
 from    crime
-join    (select @row_index := 0) as i
-inner join UCR ON crime.UCR_PART = UCR.UCR_PART;
+join    (select @row_index := 0) as i;
