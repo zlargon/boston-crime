@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 USER="root"   # Your Username
 PASSWORD=""   # Your Passowrd
 
