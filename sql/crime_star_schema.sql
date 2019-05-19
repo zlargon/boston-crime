@@ -9,6 +9,10 @@ select distinct
     UCR_PART
 from crime;
 
+alter table OFFENSE
+add primary key(OFFENSE_CODE);
+
+
 -- OCCURRED_TIME
 create table OCCURRED_TIME as
 select  @row_index := @row_index + 1 as TIME_ID,
@@ -19,6 +23,11 @@ select  @row_index := @row_index + 1 as TIME_ID,
         crime.DAY_OF_WEEK
 from    crime
 join    (select @row_index := 0) as i;
+
+alter table OCCURRED_TIME
+change column TIME_ID TIME_ID int not null,
+add primary key(TIME_ID);
+
 
 -- REGION
 create table REGION as
@@ -31,6 +40,11 @@ select  @row_index := @row_index + 1 as REGION_ID,
 from    crime
 join    (select @row_index := 0) as i;
 
+alter table REGION
+change column REGION_ID REGION_ID int not null,
+add primary key(REGION_ID);
+
+
 -- INCIDENT
 create table INCIDENT as
 select  crime.INCIDENT_NUMBER,
@@ -40,3 +54,6 @@ select  crime.INCIDENT_NUMBER,
         crime.SHOOTING
 from    crime
 join    (select @row_index := 0) as i;
+
+alter table INCIDENT
+add primary key(INCIDENT_NUMBER, OFFENSE_CODE);
